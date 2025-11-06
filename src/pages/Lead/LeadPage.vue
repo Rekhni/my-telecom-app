@@ -30,8 +30,8 @@ export default defineComponent({
     return {
       sections: [
         { id: "main", title: "В главное меню", icon: "src/assets/icons/home.png", route: '/' },
-        { id: "stat-agreement", title: "Статистика,согласование и утверждение", icon: "src/assets/icons/lead.png", route: 'lead/stat-agreement' },
-        { id: "rescheduling", title: "Перенос сроков", icon: "src/assets/icons/calendar.png", route: 'lead/rescheduling' },
+        { id: "stat-agreement", title: "Статистика,согласование и утверждение", icon: "src/assets/icons/lead.png", route: '/lead/stat-agreement' },
+        { id: "rescheduling", title: "Перенос сроков", icon: "src/assets/icons/calendar.png", route: '/lead/rescheduling' },
       ] as Section[],
     };
   },

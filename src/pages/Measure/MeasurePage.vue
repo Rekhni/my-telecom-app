@@ -30,10 +30,10 @@ export default defineComponent({
     return {
       sections: [
         { id: "main", title: "В главное меню", icon: "src/assets/icons/home.png", route: '/' },
-        { id: "copper-cable-measure", title: "Измерения медного кабеля", icon: "src/assets/icons/cabel.png", route: 'measurement/copper-cable-measure' },
-        { id: "optical-cable-measure", title: "Измерения оптического кабеля", icon: "src/assets/icons/cabel.png", route: 'measurement/optical-cable-measure' },
-        { id: "cable-tightness-measure", title: "Измерения герметичности кабеля", icon: "src/assets/icons/cabel.png", route: 'measurement/cable-tightness-measure' },
-        { id: "grounding-measure", title: "Измерение заземлений", icon: "src/assets/icons/meter.png", route: 'measurement/grounding-measure' },
+        { id: "copper-cable-measure", title: "Измерения медного кабеля", icon: "src/assets/icons/cabel.png", route: '/measurement/copper-cable-measure' },
+        { id: "optical-cable-measure", title: "Измерения оптического кабеля", icon: "src/assets/icons/cabel.png", route: '/measurement/optical-cable-measure' },
+        { id: "cable-tightness-measure", title: "Измерения герметичности кабеля", icon: "src/assets/icons/cabel.png", route: '/measurement/cable-tightness-measure' },
+        { id: "grounding-measure", title: "Измерение заземлений", icon: "src/assets/icons/meter.png", route: '/measurement/grounding-measure' },
         { id: "autogen-measure-plans", title: "Автогенерация планов измерений", icon: "src/assets/icons/refs.png", route: '/' },
       ] as Section[],
     };

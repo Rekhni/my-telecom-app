@@ -33,9 +33,9 @@ export default defineComponent({
     return {
       sections: [
         { id: "main", title: "В главное меню", icon: "src/assets/icons/home.png", route: '/' },
-        { id: "roles", title: "Роли", icon: "src/assets/icons/roles.png", route: 'admin/roles' },
-        { id: "users", title: "Пользователи", icon: "src/assets/icons/users.png", route: 'admin/users' },
-        { id: "settlements", title: "Группы населенных пунктов", icon: "src/assets/icons/settlements.png", route: 'admin/settlements' },
+        { id: "roles", title: "Роли", icon: "src/assets/icons/roles.png", route: '/admin/roles' },
+        { id: "users", title: "Пользователи", icon: "src/assets/icons/users.png", route: '/admin/users' },
+        { id: "settlements", title: "Группы населенных пунктов", icon: "src/assets/icons/settlements.png", route: '/admin/settlements' },
       ] as Section[],
     };
   },

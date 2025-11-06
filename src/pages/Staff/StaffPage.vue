@@ -30,7 +30,7 @@ export default defineComponent({
     return {
       sections: [
         { id: "main", title: "В главное меню", icon: "src/assets/icons/home.png", route: '/' },
-        { id: "performers", title: "Бригады исполнителей", icon: "src/assets/icons/performers.png", route: 'staff/performers' },
+        { id: "performers", title: "Бригады исполнителей", icon: "src/assets/icons/performers.png", route: '/staff/performers' },
         { id: "org-structure", title: "Организационная структура", icon: "src/assets/icons/org-structure.png", route: '/' },
       ] as Section[],
     };

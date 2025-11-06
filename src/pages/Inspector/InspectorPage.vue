@@ -30,9 +30,9 @@ export default defineComponent({
     return {
       sections: [
         { id: "main", title: "В главное меню", icon: "src/assets/icons/home.png", route: '/' },
-        { id: "inspector-planning", title: "Планирование работ технического инспектора", icon: "src/assets/icons/inventory.png", route: 'inspector/inspector-planning' },
-        { id: "controller-planning", title: "Планирование работ технического контроллера", icon: "src/assets/icons/inventory.png", route: 'inspector/controller-planning' },
-        { id: "rescheduling-controller-planning", title: "Перенос сроков планов работ технического контроллера", icon: "src/assets/icons/calendar.png", route: 'inspector/rescheduling-controller-planning' },
+        { id: "inspector-planning", title: "Планирование работ технического инспектора", icon: "src/assets/icons/inventory.png", route: '/inspector/inspector-planning' },
+        { id: "controller-planning", title: "Планирование работ технического контроллера", icon: "src/assets/icons/inventory.png", route: '/inspector/controller-planning' },
+        { id: "rescheduling-controller-planning", title: "Перенос сроков планов работ технического контроллера", icon: "src/assets/icons/calendar.png", route: '/inspector/rescheduling-controller-planning' },
       ] as Section[],
     };
   },
