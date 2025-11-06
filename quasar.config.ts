@@ -13,11 +13,6 @@ export default defineConfig((/* ctx */) => {
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [],
 
-    build: {
-      publicPath: '/my-telecom-app/', 
-      vueRouterMode: 'hash', 
-    },
-
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
 
@@ -41,14 +36,15 @@ export default defineConfig((/* ctx */) => {
         browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
         node: 'node20',
       },
+      publicPath: '/my-telecom-app/', 
+      vueRouterMode: 'hash', 
 
       typescript: {
         strict: true,
         vueShim: true,
         // extendTsConfig (tsConfig) {}
       },
-
-      vueRouterMode: 'history', // available values: 'hash', 'history'
+     // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
