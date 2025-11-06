@@ -16,6 +16,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import homeIcon from "src/assets/icons/home.png";
+import refsIcon from "src/assets/icons/refs.png";
 
 type Section = {
   id: string;
@@ -29,17 +31,17 @@ export default defineComponent({
   data() {
     return {
       sections: [
-        { id: "main", title: "В главное меню", icon: "src/assets/icons/home.png", route: '/' },
-        { id: "materials", title: "Материалы", icon: "src/assets/icons/refs.png", route: '/directory/materials' },
-        { id: "units-measurement", title: "Единицы измерения", icon: "src/assets/icons/refs.png", route: '/directory/units-measurement' },
-        { id: "object-defect-types", title: "Типы дефектов обьектов", icon: "src/assets/icons/refs.png", route: '/directory/object-defect-types' },
-        { id: "tech-maps", title: "Tехнологические карты", icon: "src/assets/icons/refs.png", route: 'directory/tech-maps' },
-        { id: "defect-destroying-works", title: "Работы устраняющие дефекты", icon: "src/assets/icons/refs.png", route: '/directory/defect-destroying-works' },
-        { id: "measure-resources", title: "Средства измерения", icon: "src/assets/icons/refs.png", route: '/directory/measure-resources' },
-        { id: "measure-resources-type", title: "Тип средства измерения", icon: "src/assets/icons/refs.png", route: '/directory/measure-resources-type' },
-        { id: "other-works-types", title: "Типы Прочих работ", icon: "src/assets/icons/refs.png", route: '/directory/other-works-types' },
-        { id: "weekends-holidays", title: "Выходные и праздничные дни", icon: "src/assets/icons/refs.png", route: '/directory/weekends-holidays' },
-        { id: "branches", title: "Филиалы", icon: "src/assets/icons/refs.png", route: '/directory/branches' },
+        { id: "main", title: "В главное меню", icon: homeIcon, route: '/' },
+        { id: "materials", title: "Материалы", icon: refsIcon, route: '/directory/materials' },
+        { id: "units-measurement", title: "Единицы измерения", icon: refsIcon, route: '/directory/units-measurement' },
+        { id: "object-defect-types", title: "Типы дефектов обьектов", icon: refsIcon, route: '/directory/object-defect-types' },
+        { id: "tech-maps", title: "Tехнологические карты", icon: refsIcon, route: 'directory/tech-maps' },
+        { id: "defect-destroying-works", title: "Работы устраняющие дефекты", icon: refsIcon, route: '/directory/defect-destroying-works' },
+        { id: "measure-resources", title: "Средства измерения", icon: refsIcon, route: '/directory/measure-resources' },
+        { id: "measure-resources-type", title: "Тип средства измерения", icon: refsIcon, route: '/directory/measure-resources-type' },
+        { id: "other-works-types", title: "Типы Прочих работ", icon: refsIcon, route: '/directory/other-works-types' },
+        { id: "weekends-holidays", title: "Выходные и праздничные дни", icon: refsIcon, route: '/directory/weekends-holidays' },
+        { id: "branches", title: "Филиалы", icon: refsIcon, route: '/directory/branches' },
       ] as Section[],
     };
   },

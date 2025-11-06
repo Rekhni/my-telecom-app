@@ -16,6 +16,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import homeIcon from "src/assets/icons/home.png";
+import performersIcon from "src/assets/icons/performers.png";
+import orgStructureIcon from "src/assets/icons/org-structure.png";
 
 type Section = {
   id: string;
@@ -29,9 +32,9 @@ export default defineComponent({
   data() {
     return {
       sections: [
-        { id: "main", title: "В главное меню", icon: "src/assets/icons/home.png", route: '/' },
-        { id: "performers", title: "Бригады исполнителей", icon: "src/assets/icons/performers.png", route: '/staff/performers' },
-        { id: "org-structure", title: "Организационная структура", icon: "src/assets/icons/org-structure.png", route: '/' },
+        { id: "main", title: "В главное меню", icon: homeIcon, route: '/' },
+        { id: "performers", title: "Бригады исполнителей", icon: performersIcon, route: '/staff/performers' },
+        { id: "org-structure", title: "Организационная структура", icon: orgStructureIcon, route: '/' },
       ] as Section[],
     };
   },

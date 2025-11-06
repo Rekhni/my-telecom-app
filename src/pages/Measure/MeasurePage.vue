@@ -16,6 +16,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import homeIcon from "src/assets/icons/home.png";
+import cabelIcon from "src/assets/icons/cabel.png";
+import meterIcon from "src/assets/icons/meter.png";
+import refsIcon from "src/assets/icons/refs.png";
 
 type Section = {
   id: string;
@@ -29,12 +33,12 @@ export default defineComponent({
   data() {
     return {
       sections: [
-        { id: "main", title: "В главное меню", icon: "src/assets/icons/home.png", route: '/' },
-        { id: "copper-cable-measure", title: "Измерения медного кабеля", icon: "src/assets/icons/cabel.png", route: '/measurement/copper-cable-measure' },
-        { id: "optical-cable-measure", title: "Измерения оптического кабеля", icon: "src/assets/icons/cabel.png", route: '/measurement/optical-cable-measure' },
-        { id: "cable-tightness-measure", title: "Измерения герметичности кабеля", icon: "src/assets/icons/cabel.png", route: '/measurement/cable-tightness-measure' },
-        { id: "grounding-measure", title: "Измерение заземлений", icon: "src/assets/icons/meter.png", route: '/measurement/grounding-measure' },
-        { id: "autogen-measure-plans", title: "Автогенерация планов измерений", icon: "src/assets/icons/refs.png", route: '/' },
+        { id: "main", title: "В главное меню", icon: homeIcon, route: '/' },
+        { id: "copper-cable-measure", title: "Измерения медного кабеля", icon: cabelIcon, route: '/measurement/copper-cable-measure' },
+        { id: "optical-cable-measure", title: "Измерения оптического кабеля", icon: cabelIcon, route: '/measurement/optical-cable-measure' },
+        { id: "cable-tightness-measure", title: "Измерения герметичности кабеля", icon: cabelIcon, route: '/measurement/cable-tightness-measure' },
+        { id: "grounding-measure", title: "Измерение заземлений", icon: meterIcon, route: '/measurement/grounding-measure' },
+        { id: "autogen-measure-plans", title: "Автогенерация планов измерений", icon: refsIcon, route: '/' },
       ] as Section[],
     };
   },

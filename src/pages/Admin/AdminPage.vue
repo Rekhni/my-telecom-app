@@ -19,6 +19,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import homeIcon from "src/assets/icons/home.png";
+import rolesIcon from "src/assets/icons/roles.png";
+import usersIcon from "src/assets/icons/users.png";
+import settlementsIcon from "src/assets/icons/settlements.png";
 
 type Section = {
   id: string;
@@ -32,10 +36,10 @@ export default defineComponent({
   data() {
     return {
       sections: [
-        { id: "main", title: "В главное меню", icon: "src/assets/icons/home.png", route: '/' },
-        { id: "roles", title: "Роли", icon: "src/assets/icons/roles.png", route: '/admin/roles' },
-        { id: "users", title: "Пользователи", icon: "src/assets/icons/users.png", route: '/admin/users' },
-        { id: "settlements", title: "Группы населенных пунктов", icon: "src/assets/icons/settlements.png", route: '/admin/settlements' },
+        { id: "main", title: "В главное меню", icon: homeIcon, route: '/' },
+        { id: "roles", title: "Роли", icon: rolesIcon, route: '/admin/roles' },
+        { id: "users", title: "Пользователи", icon: usersIcon, route: '/admin/users' },
+        { id: "settlements", title: "Группы населенных пунктов", icon: settlementsIcon, route: '/admin/settlements' },
       ] as Section[],
     };
   },

@@ -16,6 +16,14 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import adminIcon from "src/assets/icons/admin.png";
+import staffIcon from "src/assets/icons/staff.png";
+import inspectionIcon from "src/assets/icons/inspection.png"
+import meterIcon from 'src/assets/icons/meter.png';
+import leadIcon from 'src/assets/icons/lead.png';
+import inspectorIcon from 'src/assets/icons/inspector.png';
+import refsIcon from 'src/assets/icons/refs.png';
+import inventoryIcon from 'src/assets/icons/inventory.png';
 
 type Section = {
   id: string;
@@ -29,14 +37,14 @@ export default defineComponent({
   data() {
     return {
       sections: [
-        { id: "admin", title: "Администрирование", icon: "src/assets/icons/admin.png", route: "/admin" },
-        { id: "staff", title: "Технический персонал", icon: "src/assets/icons/staff.png", route: "/staff" },
-        { id: "inspection", title: "АРМ Осмотр и ТО", icon: "src/assets/icons/inspection.png", route: "/inspection" },
-        { id: "measure", title: "АРМ Измеритель", icon: 'src/assets/icons/meter.png', route: "/measurement" },
-        { id: "lead", title: "АРМ Руководитель", icon: 'src/assets/icons/lead.png', route: "/lead" },
-        { id: "inspector", title: "АРМ Технический инспектор", icon: 'src/assets/icons/inspector.png', route: "/inspector" },
-        { id: "directory", title: "Справочники", icon: 'src/assets/icons/refs.png', route: "/directory" },
-        { id: "inventory", title: "Инвентаризация", icon: 'src/assets/icons/inventory.png', route: "/inventory" }
+        { id: "admin", title: "Администрирование", icon: adminIcon, route: "/admin" },
+        { id: "staff", title: "Технический персонал", icon: staffIcon, route: "/staff" },
+        { id: "inspection", title: "АРМ Осмотр и ТО", icon: inspectionIcon, route: "/inspection" },
+        { id: "measure", title: "АРМ Измеритель", icon: meterIcon, route: "/measurement" },
+        { id: "lead", title: "АРМ Руководитель", icon: leadIcon, route: "/lead" },
+        { id: "inspector", title: "АРМ Технический инспектор", icon: inspectorIcon, route: "/inspector" },
+        { id: "directory", title: "Справочники", icon: refsIcon, route: "/directory" },
+        { id: "inventory", title: "Инвентаризация", icon: inventoryIcon, route: "/inventory" }
       ] as Section[],
     };
   },
