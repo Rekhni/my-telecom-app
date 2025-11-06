@@ -13,6 +13,11 @@ export default defineConfig((/* ctx */) => {
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [],
 
+    build: {
+      publicPath: '/my-telecom-app/', 
+      vueRouterMode: 'hash', 
+    },
+
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
 
