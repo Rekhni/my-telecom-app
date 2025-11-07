@@ -256,17 +256,19 @@ export default {
 }
 
 /* make scrollbars minimal (optional aesthetic) */
-.defects-table-wrapper::-webkit-scrollbar {
-  width: 6px;
-}
-.defects-table-wrapper::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+.defects-table-wrapper {
+  max-height: 56vh;               /* visible height on phones */
+  overflow: auto;                  /* vertical + horizontal scroll */
+  -webkit-overflow-scrolling: touch; /* momentum on iOS */
+  border-radius: 8px; border: 1px solid #e6e6e6;
 }
 
 .modal-card {
-  width: min(900px, 92vw); background: #fff; border-radius: 12px; overflow: hidden;
-  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  width: min(900px, 92vw);
+  max-height: 90vh;            
+  background: #fff; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  display: flex; flex-direction: column;
 }
 .modal-header {
   display: flex; align-items: center; justify-content: flex-end;
@@ -278,9 +280,9 @@ export default {
 .modal-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 20px }
 
 .defects-table {
-  height: 50%;
-  overflow: hidden;
-  border-collapse: collapse;
+  display: block;            
+  min-width: 720px;              
+  border-collapse: collapse; width: 100%;
 }
 
 .actions button {
@@ -313,5 +315,10 @@ th {
 }
 tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+@media (max-width: 420px){
+  .defects-table-wrapper{ max-height: 52vh; }
+  .defects-table{ min-width: 600px; }
 }
 </style>
