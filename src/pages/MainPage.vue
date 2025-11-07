@@ -16,14 +16,14 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import adminIcon from "src/assets/icons/admin.png";
-import staffIcon from "src/assets/icons/staff.png";
-import inspectionIcon from "src/assets/icons/inspection.png"
-import meterIcon from 'src/assets/icons/meter.png';
-import leadIcon from 'src/assets/icons/lead.png';
-import inspectorIcon from 'src/assets/icons/inspector.png';
-import refsIcon from 'src/assets/icons/refs.png';
-import inventoryIcon from 'src/assets/icons/inventory.png';
+import adminIcon from "src/assets/icons/admin.png?url";
+import staffIcon from "src/assets/icons/staff.png?url";
+import inspectionIcon from "src/assets/icons/inspection.png?url"
+import meterIcon from 'src/assets/icons/meter.png?url';
+import leadIcon from 'src/assets/icons/admin.png';
+import inspectorIcon from 'src/assets/icons/inspector.png?url';
+import refsIcon from 'src/assets/icons/refs.png?url';
+import inventoryIcon from 'src/assets/icons/inventory.png?url';
 
 type Section = {
   id: string;
