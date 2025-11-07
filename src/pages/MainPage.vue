@@ -39,10 +39,10 @@ export default defineComponent({
       sections: [
         { id: "admin", title: "Администрирование", icon: adminIcon, route: "/admin" },
         { id: "staff", title: "Технический персонал", icon: staffIcon, route: "/staff" },
-        { id: "inspection", title: "АРМ Осмотр и ТО", icon: inspectionIcon, route: "/inspection" },
-        { id: "measure", title: "АРМ Измеритель", icon: meterIcon, route: "/measurement" },
-        { id: "lead", title: "АРМ Руководитель", icon: leadIcon, route: "/lead" },
-        { id: "inspector", title: "АРМ Технический инспектор", icon: inspectorIcon, route: "/inspector" },
+        { id: "inspection", title: "ППР", icon: inspectionIcon, route: "/inspection" },
+        { id: "measure", title: "Измеритель", icon: meterIcon, route: "/measurement" },
+        { id: "lead", title: "Руководитель", icon: leadIcon, route: "/lead" },
+        { id: "inspector", title: "Технический инспектор", icon: inspectorIcon, route: "/inspector" },
         { id: "directory", title: "Справочники", icon: refsIcon, route: "/directory" },
         { id: "inventory", title: "Инвентаризация", icon: inventoryIcon, route: "/inventory" }
       ] as Section[],
