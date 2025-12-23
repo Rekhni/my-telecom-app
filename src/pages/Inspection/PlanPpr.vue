@@ -1,27 +1,51 @@
 <template>
     <div>
         <h2 :style="{ fontSize: '30px', marginLeft: '30px' }">План ППР</h2>
-        <div className="actions">
-            <button className="btn-add" @click="openForm">Создать</button>
-            <button className="btn-green">Редактировать</button>
-            <button className="btn-red">Удалить</button>
-            <button className="btn-filter">Фильтр</button>
-            <button className="btn-export">Экспорт</button>
-            <button className="btn-green">Согласовать</button>
+        <div class="actions">
+            <button class="btn-add" @click="openForm">Создать</button>
+            <button class="btn-green">Редактировать</button>
+            <button class="btn-red">Удалить</button>
+            <button class="btn-filter">Фильтр</button>
+            <button class="btn-export">Экспорт</button>
+            <button class="btn-green">Согласовать</button>
         </div>
 
         <table class="inspection-table">
             <thead>
                 <tr>
                     <th>N</th>
-                    <th>Название устройства</th>
+                    <th>Тип обьекта</th>
                     <th>Местонахождение</th>
+                    <th>Отвественный</th>
+                    <th>Кол-во обьектов</th>
                     <th>Дата 1 кв</th>
                     <th>Дата 2 кв</th>
                     <th>Дата 3 кв</th>
                     <th>Дата 4 кв</th>
                 </tr>
             </thead>
+            <tbody>
+                <tr v-if="loading">
+                  <td colspan="4">Загрузка...</td>
+                </tr>
+                <tr v-else-if="error">
+                  <td colspan="4">Ошибка: {{ error }}</td>
+                </tr>
+                <tr v-else-if="pprs.length === 0">
+                  <td colspan="4">Нет данных</td>
+                </tr>
+                <tr v-for="ppr in pprs" :key="ppr.id">
+                  <td>{{ ppr.id }}</td>
+                  <td>{{ ppr.type }}</td>
+                  <td>{{ ppr.location }}</td>
+                  <td>{{ ppr.leaderFullName }}</td>
+                  <td>100</td>
+                  <td>{{ ppr.q1Date }}</td>
+                  <td>{{ ppr.q2Date }}</td>
+                  <td>{{ ppr.q3Date }}</td>
+                  <td>{{ ppr.q4Date }}</td>
+                </tr>
+            </tbody>
         </table>
         <div v-if="showForm" class="modal-backdrop" @click.self="closeForm">
           <div class="modal-card">
@@ -31,41 +55,83 @@
 
             <div class="modal-body grid">
               <div class="field">
-                <label>Название устройства </label>
-                <input class="obj-input" type="text" width="400px">
+                <label>Тип обьекта </label>
+                <input class="obj-input" v-model="form.type" type="text" width="400px">
               </div>
 
               <div class="field">
                 <label>Местонахождение </label>
-                <input class="obj-input" type="text" width="400px">
+                <input class="obj-input" v-model="form.location" type="text" width="400px">
               </div>
 
               <div class="field">
                 <label>Дата 1 кв </label>
-                <input class="obj-input" type="date" width="400px">
+                <input class="obj-input" v-model="form.q1Date" type="date" width="400px">
               </div>
 
               <div class="field">
                 <label>Дата 2 кв </label>
-                <input class="obj-input" type="date" width="400px">
+                <input class="obj-input" v-model="form.q2Date" type="date" width="400px">
               </div>
 
               <div class="field">
                 <label>Дата 3 кв </label>
-                <input class="obj-input" type="date" width="400px">
+                <input class="obj-input" v-model="form.q3Date" type="date" width="400px">
+              </div>
+              <div class="field">
+                <label>Дата 4 кв </label>
+                <input class="obj-input" v-model="form.q4Date" type="date" width="400px">
+              </div>
+              <div class="field">
+                <label for="crewId">Бригада исполнителей</label>
+                <select id="crewId" class="obj-input" v-model="form.crewId">
+                  <option disabled value="">Выберите бригаду</option>
+                  <option v-for="c in crews" :key="c.id" :value="c.id">
+                    {{ c.name }} — {{ c.desd }} (бригадир: {{ c.leaderFullName }})
+                  </option>
+                </select>
               </div>
             </div>
+            <button @click="savePprPlan">Сохранить</button>
           </div>
         </div>
     </div>
 </template>
 
 <script>
+  import axios from 'axios';
+
+  const API = import.meta.env.VITE_API_URL;
+
+  const api = axios.create({
+    baseURL: API || 'http://localhost:8080/api', // наш Spring Boot
+  });
+
+
+
 export default {
-  data() {
-    return {
-      showForm: false
-    }
+    data() {
+      return {
+        crews: [],
+        pprs: [],
+        loading: false,
+        error: null,
+        showForm: false,
+        form: {
+          type: "",
+          location: "",
+          crewId: "",
+          q1Date: "",
+          q2Date: "",
+          q3Date: "",
+          q4Date: ""
+        }
+      };
+    },
+  
+  mounted() {
+      this.loadCrews();
+      this.getPprPlan();
   },
 
   methods: {
@@ -75,6 +141,57 @@ export default {
 
     closeForm() {
       this.showForm = false;
+    },
+    async loadCrews() {
+        this.loading = true;
+        this.error = null;
+        try {
+          const { data } = await api.get('/crews');
+          // data — это список CrewResponse из бэка
+          this.crews = data;
+        } catch (e) {
+          console.error(e);
+          this.error = 'Не удалось загрузить бригады';
+        } finally {
+          this.loading = false;
+        }
+    },
+
+    async getPprPlan() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const { data } = await api.get("/pprs");
+        this.pprs = data;
+      } catch(e) {
+          console.error(e);
+          this.error = 'Не удалось загрузить ППР планы';
+      } finally {
+        this.loading = false;
+      }
+    }, 
+
+    async savePprPlan() {
+      try {
+        await api.post('/pprs', {
+          type: this.form.type,
+          location: this.form.location,
+          crewId: this.form.crewId,
+          q1Date: this.form.q1Date || null,
+          q2Date: this.form.q2Date || null,
+          q3Date: this.form.q3Date || null,
+          q4Date: this.form.q4Date || null
+        });
+      
+        await this.getPprPlan();
+        this.closeForm();
+
+        this.form = { type:"", location:"", crewId:"", q1Date:"", q2Date:"", q3Date:"", q4Date:"" };
+
+      } catch (e) {
+        console.error('Ошибка сохранения ппр плана', e);
+        alert('Не удалось сохранить ппр плана');
+      }
     }
   }
 }
@@ -105,6 +222,7 @@ export default {
 
 .grid {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
 }
 
