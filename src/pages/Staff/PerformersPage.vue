@@ -3,8 +3,8 @@
         <h2 :style="{ fontSize: '30px', marginLeft: '30px' }">Бригады исполнителей</h2>
         <div className="actions">
             <button className="btn-add" @click="onAdd">Добавить</button>
-            <button className="btn-green">Редактировать</button>
-            <button className="btn-red">Удалить</button>
+            <button className="btn-green" :disabled="!selectedCrewId" @click="onEdit">Редактировать</button>
+            <button className="btn-red" :disabled="!selectedCrewId" @click="deleteCrew(selectedCrewId)">Удалить</button>
             <button className="btn-view">Просмотр</button>
             <button className="btn-filter">Фильтр</button>
             <button className="btn-export">Экспорт</button>
@@ -29,7 +29,13 @@
               <tr v-else-if="crews.length === 0">
                 <td colspan="4">Нет данных</td>
               </tr>
-              <tr v-for="crew in crews" :key="crew.id">
+              <tr 
+                v-for="crew in sortedCrews" 
+                :key="crew.id"
+                @click="selectCrew(crew)"
+                :class="{ selected: crew.id === selectedCrewId }"
+                style="cursor: pointer"
+              >
                 <td>{{ crew.id }}</td>
                 <td>{{ crew.desd }}</td>
                 <td>{{ crew.name }}</td>
@@ -44,6 +50,9 @@
           >
             <div class="modal-card">
               <CrewForm
+                :key="isEdit ? `edit-${selectedCrewId}` : 'create'"
+                :crewId="selectedCrewId"
+                :isEdit="isEdit"
                 @close="closeCrewForm"
                 @saved="onCrewSaved"
               />
@@ -71,7 +80,15 @@
         loading: false,
         error: null,
         showCrewForm: false,
+        isEdit: false,
+        selectedCrewId: null
       };
+    },
+
+    computed: {
+      sortedCrews() {
+        return [...this.crews].sort((a, b) => a.id - b.id);
+      }
     },
 
     mounted() {
@@ -96,19 +113,68 @@
 
       onAdd() {
         this.showCrewForm = true;
+        this.isEdit = false;
+        this.selectedCrewId = null;
+      },
+
+      onEdit() {
+        if (!this.selectedCrewId) return;
+        this.showCrewForm = true;
+        this.isEdit = true;
+      },
+
+      selectCrew(crew) {
+        this.selectedCrewId = crew.id;
       },
 
       closeCrewForm() {
         this.showCrewForm = false;
       },
       async onCrewSaved() {
+        this.showCrewForm = false;
         await this.loadCrews();
       },
+
+      async deleteCrew(id) {
+        if (!id) return;
+    
+        const confirmed = confirm("Вы уверены, что хотите удалить бригаду?");
+        if (!confirmed) return;
+
+        try {
+          await api.delete(`/crews/${id}`);
+          this.selectedCrewId = null;
+          await this.loadCrews();
+        } catch(e) {
+          console.error('Ошибка удаления бригады', e);
+          alert('Не удалось удалить бригаду');
+        }
+      }
     }
   }
 </script>
 
 <style scoped>
+  .modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 70px;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: #fff;
+  padding: 16px;
+  min-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 4px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
 .actions {
   margin-bottom: 10px;
   margin-left: 10px;
@@ -143,5 +209,9 @@ th {
 }
 tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+.selected {
+  background: rgba(36, 103, 196, 0.38) !important;
 }
 </style>

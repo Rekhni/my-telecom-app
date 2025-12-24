@@ -2,9 +2,9 @@
     <div>
         <h2 :style="{ fontSize: '30px', marginLeft: '30px' }">План ППР</h2>
         <div class="actions">
-            <button class="btn-add" @click="openForm">Создать</button>
-            <button class="btn-green">Редактировать</button>
-            <button class="btn-red">Удалить</button>
+            <button class="btn-add" @click="openCreateForm">Создать</button>
+            <button class="btn-green" :disabled="!selectedPprId" @click="openEditForm">Редактировать</button>
+            <button class="btn-red" :disabled="!selectedPprId" @click="deletePpr(selectedPprId)">Удалить</button>
             <button class="btn-filter">Фильтр</button>
             <button class="btn-export">Экспорт</button>
             <button class="btn-green">Согласовать</button>
@@ -34,7 +34,13 @@
                 <tr v-else-if="pprs.length === 0">
                   <td colspan="4">Нет данных</td>
                 </tr>
-                <tr v-for="ppr in pprs" :key="ppr.id">
+                <tr 
+                  v-for="ppr in sortedPprs" 
+                  :key="ppr.id"
+                  @click="selectPpr(ppr)"
+                  :class="{ selected: ppr.id === selectedPprId }"
+                  style=" cursor: pointer "
+                >
                   <td>{{ ppr.id }}</td>
                   <td>{{ ppr.type }}</td>
                   <td>{{ ppr.location }}</td>
@@ -50,6 +56,9 @@
         <div v-if="showForm" class="modal-backdrop" @click.self="closeForm">
           <div class="modal-card">
             <div class="modal-header">
+               <div>
+                {{ isEdit ? "Редактирование плана" : "Создание плана" }}
+              </div>
               <button class="close" @click="closeForm">x</button>
             </div>
 
@@ -114,6 +123,8 @@ export default {
       return {
         crews: [],
         pprs: [],
+        isEdit: false,
+        selectedPprId: null,
         loading: false,
         error: null,
         showForm: false,
@@ -134,9 +145,44 @@ export default {
       this.getPprPlan();
   },
 
+  computed: {
+    sortedPprs() {
+      return [...this.pprs].sort((a, b) => a.id - b.id);
+    }
+  },
+
   methods: {
-    openForm() {
+    openCreateForm() {
       this.showForm = true;
+      this.selectedPprId = null;
+      this.isEdit = false;
+
+      this.form = { type:"", location:"", crewId:"", q1Date:"", q2Date:"", q3Date:"", q4Date:"" };
+    },
+
+    openEditForm() {
+      if (!this.selectedPprId) return;
+
+      const ppr = this.pprs.find((x) => x.id === this.selectedPprId);
+
+      this.isEdit = true;
+
+      this.form = {
+          type: ppr.type,
+          location: ppr.location,
+          crewId: ppr.crewId,
+          q1Date: ppr.q1Date,
+          q2Date: ppr.q2Date,
+          q3Date: ppr.q3Date,
+          q4Date: ppr.q4Date
+
+      }
+
+      this.showForm = true;
+    },
+
+    selectPpr(ppr) {
+      this.selectedPprId = ppr.id;
     },
 
     closeForm() {
@@ -172,26 +218,57 @@ export default {
     }, 
 
     async savePprPlan() {
+      if (!this.form.type || !this.form.location || !this.form.crewId) {
+        alert("Заполните тип, местонахождение и выберите бригаду");
+        return;
+      }
+
+      const payload = {
+        type: this.form.type,
+        location: this.form.location,
+        crewId: this.form.crewId,
+        q1Date: this.form.q1Date || null,
+        q2Date: this.form.q2Date || null,
+        q3Date: this.form.q3Date || null,
+        q4Date: this.form.q4Date || null,
+      };
+
       try {
-        await api.post('/pprs', {
-          type: this.form.type,
-          location: this.form.location,
-          crewId: this.form.crewId,
-          q1Date: this.form.q1Date || null,
-          q2Date: this.form.q2Date || null,
-          q3Date: this.form.q3Date || null,
-          q4Date: this.form.q4Date || null
-        });
+        if (this.isEdit && this.selectedPprId) {
+          // ✅ UPDATE
+          await api.put(`/pprs/${this.selectedPprId}`, payload);
+        } else {
+          // ✅ CREATE
+          await api.post("/pprs", payload);
+        }
       
         await this.getPprPlan();
         this.closeForm();
 
         this.form = { type:"", location:"", crewId:"", q1Date:"", q2Date:"", q3Date:"", q4Date:"" };
+        this.isEdit = false;
+        this.selectedPprId = null;
 
       } catch (e) {
         console.error('Ошибка сохранения ппр плана', e);
         alert('Не удалось сохранить ппр плана');
       }
+    },
+
+    async deletePpr(id) {
+        if (!id) return;
+    
+        const confirmed = confirm("Вы уверены, что хотите удалить план?");
+        if (!confirmed) return;
+
+        try {
+          await api.delete(`/pprs/${id}`);
+          this.selectedUserId = null;
+          await this.getPprPlan();
+        } catch(e) {
+          console.error('Ошибка удаления план', e);
+          alert('Не удалось удалить план');
+        }
     }
   }
 }
@@ -216,27 +293,117 @@ export default {
 }
 
 .modal-backdrop {
-  position: fixed; inset: 0; background: rgba(0,0,0,.35);
-  display: grid; place-items: center; z-index: 1000;
-}
-
-.grid {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55); /* slate-900 */
+  backdrop-filter: blur(6px);
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
 .modal-card {
-  width: min(900px, 92vw); background: #fff; border-radius: 12px; overflow: hidden;
-  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  background: #ffffff;
+  width: 720px;
+  max-width: calc(100vw - 32px);
+  border-radius: 16px;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  animation: modalScale 0.25s ease;
 }
 
 .modal-header {
-  display: flex; align-items: center; justify-content: flex-end;
-  padding: 14px 18px; border-bottom: 1px solid #eee;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 18px;
+  background: linear-gradient(135deg, #f8fafc, #eef2f7);
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.modal-body { padding: 16px 18px; display: flex; flex-direction: row; gap: 20px }
+.modal-header .close {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  color: #475569;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-header .close:hover {
+  color: #ef4444;
+  transform: scale(1.15);
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-body.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 20px;
+}
+
+.modal-body .field:last-child {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.obj-input {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  background: #fff;
+}
+
+.obj-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.modal-card > button {
+  margin: 0 24px 24px auto;
+  display: block;
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+
+.modal-card > button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.45);
+}
+
+.modal-card > button:active {
+  transform: translateY(0);
+}
 
 
 .btn-add { background-color: #3a87ad; }
@@ -262,4 +429,26 @@ th {
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
+
+.selected {
+  background: rgba(36, 103, 196, 0.38) !important;
+}
+
+@keyframes modalScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .modal-body.grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>

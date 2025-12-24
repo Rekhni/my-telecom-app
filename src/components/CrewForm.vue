@@ -1,7 +1,5 @@
 <template>
   <!-- Модальное окно -->
-  <div class="modal-backdrop" @click.self="$emit('close')">
-    <div class="modal-card">
       <div class="crew-form">
         <!-- Верхние кнопки -->
         <div class="toolbar">
@@ -9,7 +7,9 @@
           <button class="btn-green" @click="saveCrew">Сохранить и закрыть</button>
         </div>
 
-        <p>Бригады исполнителей - Добавление записи</p>
+        <p>
+          Бригады исполнителей - {{ isEdit ? "Редактирование записи" : "Добавление записи" }}
+        </p>
 
         <!-- Основные данные -->
         <fieldset class="block">
@@ -141,8 +141,6 @@
           </div>
         </fieldset>
       </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -159,6 +157,10 @@ const api = axios.create({
 export default {
   name: 'CrewForm',
   emits: ['close', 'saved'],
+  props: {
+    crewId: { type: [Number, String], default: null },
+    isEdit: { type: Boolean, default: false }
+  },
 
   data() {
     return {
@@ -186,6 +188,18 @@ export default {
 
       loading: false,
     };
+  },
+
+  watch: {
+    isEdit(newVal) {
+      if (!newVal) this.resetForm();
+    }
+  },
+
+  mounted() {
+    if (this.isEdit && this.crewId) {
+      this.loadCrew();
+    }
   },
 
   methods: {
@@ -267,6 +281,27 @@ export default {
       this.selectedMember = null;
     },
 
+    async loadCrew() {
+      try {
+        this.loading = true;
+        const { data } = await api.get(`/crews/${this.crewId}`);
+
+        this.form.desd = data.desd ?? "";
+        this.form.name = data.name ?? "";
+        this.form.members = (data.members ?? []).map(m => ({
+          id: m.id,
+          fullName: m.fullName,
+          phoneNumber: m.phoneNumber
+        }));
+        this.leaderId = data.leaderId ?? null;
+      } catch(e) {
+        console.error('Ошибка загрузки бригады', e);
+        alert('Не удалось загрузить бригаду для редактирования');
+      } finally {
+        this.loading = false;
+      }
+    },
+
     async saveCrew() {
       if (!this.form.desd || !this.form.name) {
         alert('Заполните обязательные поля (ДЭСД, Наименование)');
@@ -291,7 +326,11 @@ export default {
       };
 
       try {
-        await api.post('/crews', payload);
+        if (this.isEdit && this.crewId) {
+          await api.put(`/crews/${this.crewId}`, payload);
+        } else {
+          await api.post('/crews', payload);
+        }
         this.$emit('saved');
         this.$emit('close');
       } catch (e) {
@@ -299,132 +338,289 @@ export default {
         alert('Не удалось сохранить бригаду');
       }
     },
+
+    resetForm() {
+      this.form.desd = '';
+      this.form.name = '';
+      this.form.members = [];
+      this.leaderId = null;
+      this.selectedMember = null;
+      this.clearSearch();
+    }
   },
 };
 </script>
 
 <style scoped>
 /* модальное окно */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 70px;
-  z-index: 1000;
-}
 
-.modal-card {
-  background: #fff;
-  padding: 16px;
-  min-width: 900px;
-  max-height: 90vh;
-  overflow-y: auto;
-  border-radius: 4px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-}
 
 /* внутренняя форма */
 .crew-form {
-  padding: 4px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px 28px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+  animation: fadeUp 0.25s ease;
 }
 
 .toolbar {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
 }
 
-.block {
-  margin-top: 16px;
-  padding: 12px;
-  border: 1px solid #ccc;
+.toolbar button {
+  min-width: 160px;
+}
+
+.crew-form > p {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 12px 0 22px;
+}
+
+fieldset.block {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px 20px 22px;
+  margin-bottom: 24px;
+}
+
+fieldset.block legend {
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
 }
 
 .sub-block {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-top: 8px;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 16px 18px 20px;
 }
 
 .sub-header {
+  font-size: 14px;
   font-weight: 600;
-  margin-bottom: 8px;
+  color: #334155;
+  margin-bottom: 14px;
 }
 
 .field {
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .field.row {
   display: flex;
-  gap: 16px;
+  align-items: flex-end;
+  gap: 12px;
 }
+
 
 .field.row.middle {
-  align-items: flex-end;
+  align-items: center;
 }
 
-.col {
+.field .col {
   flex: 1;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.req {
+  color: #ef4444;
+  margin-left: 4px;
 }
 
 .obj-input {
   width: 100%;
-  padding: 4px 6px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  font-size: 14px;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
-.req {
-  color: red;
+.obj-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 .search-results {
-  max-height: 150px;
+  margin: 10px 0 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  max-height: 200px;
   overflow-y: auto;
-  border: 1px solid #ddd;
-  margin-bottom: 8px;
+  background: #fff;
 }
 
 .search-result-row {
-  padding: 4px 6px;
+  padding: 10px 14px;
   cursor: pointer;
+  font-size: 14px;
+  transition: background 0.15s ease;
+}
+
+.search-result-row:hover {
+  background: #f1f5f9;
 }
 
 .search-result-row.selected {
-  background: #e6f2ff;
+  background: #dbeafe;
+  font-weight: 500;
+}
+
+button {
+  border-radius: 10px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-add {
+  background: #2563eb;
+  color: #fff;
+  padding: 0 18px;
+}
+
+.btn-add:hover {
+  background: #1e40af;
+}
+
+.btn-green {
+  background: #16a34a;
+  color: #fff;
+  padding: 0 18px;
+}
+
+.btn-green:hover {
+  background: #15803d;
+}
+
+.btn-red {
+  background: #ef4444;
+  color: #fff;
+  padding: 0 18px;
+}
+
+
+.btn-red:hover {
+  background: #dc2626;
+}
+
+
+.btn-view {
+  background: #e5e7eb;
+  color: #0f172a;
+  padding: 0 18px;
+}
+
+.btn-view:hover {
+  background: #cbd5e1;
+}
+
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin: 14px 0;
+}
+
+.tab {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
 }
 
 .members-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 8px;
+  margin-top: 10px;
 }
+
 
 .members-table th,
 .members-table td {
-  border: 1px solid #ddd;
-  padding: 4px 6px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
 }
 
-.members-table tr.selected {
-  background-color: #e6f2ff;
+.members-table th {
+  background: #f1f5f9;
+  font-weight: 600;
+  text-align: left;
 }
 
-.tabs {
-  margin-top: 8px;
-  display: flex;
+.members-table tbody tr {
+  cursor: pointer;
+  transition: background 0.15s ease;
 }
 
-.tab {
-  padding: 6px 12px;
-  border: 1px solid #999;
-  background: #f0f0f0;
+.members-table tbody tr:hover {
+  background: #f8fafc;
 }
 
-.tab.active {
-  background: linear-gradient(to bottom, #bcd3ff, #5a8bff);
-  color: #fff;
+.members-table tbody tr.selected {
+  background: #dbeafe;
+  font-weight: 500;
 }
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .field.row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .toolbar button {
+    width: 100%;
+  }
+}
+
+
 </style>
