@@ -1,0 +1,258 @@
+[
+    {
+        "id": 1,
+        "region": "Алматы",
+        "types": [
+            { "name": "РШ", "totalQty": 794, "inPlanQty": 91 },
+            { "name": "ОРШ", "totalQty": 308, "inPlanQty": 141 },
+            { "name": "РК", "totalQty": 59490, "inPlanQty": 0 },
+            { "name": "ОРК", "totalQty": 27814, "inPlanQty": 6988 },
+            { "name": "КЯ", "totalQty": 16515, "inPlanQty": 0 },
+            { "name": "ПСУ", "totalQty": 30773, "inPlanQty": 884 },
+            { "name": "Опор", "totalQty": 41599, "inPlanQty": 24424 },
+            { "name": "МАД", "totalQty": 278, "inPlanQty": 89 },
+            { "name": "ШАД", "totalQty": 77, "inPlanQty": 4 },
+            { "name": "УБАД", "totalQty": 116, "inPlanQty": 34 }
+        ]
+    },
+    {
+        "id": 2,
+        "region": "Атырау",
+        "types": [
+            { "name": "РШ", "totalQty": 291, "inPlanQty": 282 },
+            { "name": "ОРШ", "totalQty": 12, "inPlanQty": 11 },
+            { "name": "РК", "totalQty": 7508, "inPlanQty": 2753 },
+            { "name": "ОРК", "totalQty": 7452, "inPlanQty": 2850 },
+            { "name": "КЯ", "totalQty": 8685, "inPlanQty": 5007 },
+            { "name": "ПСУ", "totalQty": 10780, "inPlanQty": 3914 },
+            { "name": "Опор", "totalQty": 38786, "inPlanQty": 35630 },
+            { "name": "МАД", "totalQty": 37, "inPlanQty": 35 },
+            { "name": "ШАД", "totalQty": 37, "inPlanQty": 35 },
+            { "name": "УБАД", "totalQty": 37, "inPlanQty": 36 }
+        ]
+    },
+    {
+        "id": 3,
+        "region": "Костанай",
+        "types": [
+            { "name": "РШ", "totalQty": 768, "inPlanQty": 116 },
+            { "name": "ОРШ", "totalQty": 41, "inPlanQty": 41 },
+            { "name": "РК", "totalQty": 22526, "inPlanQty": 3036 },
+            { "name": "ОРК", "totalQty": 5012, "inPlanQty": 241 },
+            { "name": "КЯ", "totalQty": 10394, "inPlanQty": 1797 },
+            { "name": "ПСУ", "totalQty": 11320, "inPlanQty": 759 },
+            { "name": "Опор", "totalQty": 59935, "inPlanQty": 56390 },
+            { "name": "МАД", "totalQty": 102, "inPlanQty": 41 },
+            { "name": "ШАД", "totalQty": 16, "inPlanQty": 7 },
+            { "name": "УБАД", "totalQty": 1, "inPlanQty": 1 }
+        ]
+    },
+    {
+        "id": 4,
+        "region": "Северный Казахстан",
+        "types": [
+            { "name": "РШ", "totalQty": 161, "inPlanQty": 145 },
+            { "name": "ОРШ", "totalQty": 4, "inPlanQty": 4 },
+            { "name": "РК", "totalQty": 941, "inPlanQty": 531 },
+            { "name": "ОРК", "totalQty": 2813, "inPlanQty": 2756 },
+            { "name": "КЯ", "totalQty": 3819, "inPlanQty": 3427 },
+            { "name": "ПСУ", "totalQty": 1435, "inPlanQty": 1435 },
+            { "name": "Опор", "totalQty": 67833, "inPlanQty": 66778 },
+            { "name": "МАД", "totalQty": 15, "inPlanQty": 14 },
+            { "name": "ШАД", "totalQty": 14, "inPlanQty": 14 },
+            { "name": "УБАД", "totalQty": 14, "inPlanQty": 14 }
+        ]
+    },
+    {
+        "id": 5,
+        "region": "Жамбыл",
+        "types": [
+            { "name": "РШ", "totalQty": 436, "inPlanQty": 141 },
+            { "name": "ОРШ", "totalQty": 51, "inPlanQty": 17 },
+            { "name": "РК", "totalQty": 6073, "inPlanQty": 519 },
+            { "name": "ОРК", "totalQty": 7992, "inPlanQty": 2504 },
+            { "name": "КЯ", "totalQty": 9885, "inPlanQty": 3141 },
+            { "name": "ПСУ", "totalQty": 12213, "inPlanQty": 1280 },
+            { "name": "Опор", "totalQty": 55408, "inPlanQty": 54451 },
+            { "name": "МАД", "totalQty": 44, "inPlanQty": 13 },
+            { "name": "ШАД", "totalQty": 44, "inPlanQty": 13 },
+            { "name": "УБАД", "totalQty": 44, "inPlanQty": 13 }
+        ]
+    },
+    {
+        "id": 6,
+        "region": "Караганда",
+        "types": [
+            { "name": "РШ", "totalQty": 938, "inPlanQty": 259 },
+            { "name": "ОРШ", "totalQty": 23, "inPlanQty": 7 },
+            { "name": "РК", "totalQty": 35865, "inPlanQty": 2173 },
+            { "name": "ОРК", "totalQty": 17548, "inPlanQty": 4413 },
+            { "name": "КЯ", "totalQty": 9307, "inPlanQty": 2304 },
+            { "name": "ПСУ", "totalQty": 17921, "inPlanQty": 2006 },
+            { "name": "Опор", "totalQty": 36874, "inPlanQty": 18229 },
+            { "name": "МАД", "totalQty": 206, "inPlanQty": 66 },
+            { "name": "ШАД", "totalQty": 3, "inPlanQty": 1 },
+            { "name": "УБАД", "totalQty": 2, "inPlanQty": 1 }
+        ]
+    },
+    {
+        "id": 7,
+        "region": "Мангистау",
+        "types": [
+            { "name": "РШ", "totalQty": 230, "inPlanQty": 16 },
+            { "name": "ОРШ", "totalQty": 45, "inPlanQty": 17 },
+            { "name": "РК", "totalQty": 6670, "inPlanQty": 107 },
+            { "name": "ОРК", "totalQty": 9402, "inPlanQty": 1682 },
+            { "name": "КЯ", "totalQty": 3099, "inPlanQty": 491 },
+            { "name": "ПСУ", "totalQty": 4558, "inPlanQty": 160 },
+            { "name": "Опор", "totalQty": 11293, "inPlanQty": 11151 },
+            { "name": "МАД", "totalQty": 27, "inPlanQty": 3 },
+            { "name": "ШАД", "totalQty": 14, "inPlanQty": 1 },
+            { "name": "УБАД", "totalQty": 2, "inPlanQty": 1 }
+        ]
+    },
+    {
+        "id": 8,
+        "region": "Южный Казахстан",
+        "types": [
+            { "name": "РШ", "totalQty": 564, "inPlanQty": 217 },
+            { "name": "ОРШ", "totalQty": 101, "inPlanQty": 33 },
+            { "name": "РК", "totalQty": 13135, "inPlanQty": 99 },
+            { "name": "ОРК", "totalQty": 8375, "inPlanQty": 2791 },
+            { "name": "КЯ", "totalQty": 11006, "inPlanQty": 4077 },
+            { "name": "ПСУ", "totalQty": 17139, "inPlanQty": 662 },
+            { "name": "Опор", "totalQty": 63617, "inPlanQty": 40276 },
+            { "name": "МАД", "totalQty": 47, "inPlanQty": 16 },
+            { "name": "ШАД", "totalQty": 46, "inPlanQty": 15 },
+            { "name": "УБАД", "totalQty": 46, "inPlanQty": 15 }
+        ]
+    },
+    {
+        "id": 9,
+        "region": "Актобе",
+        "types": [
+            { "name": "РШ", "totalQty": 294, "inPlanQty": 101 },
+            { "name": "ОРШ", "totalQty": 10, "inPlanQty": 10 },
+            { "name": "РК", "totalQty": 7208, "inPlanQty": 2507 },
+            { "name": "ОРК", "totalQty": 9360, "inPlanQty": 3120 },
+            { "name": "КЯ", "totalQty": 6539, "inPlanQty": 2139 },
+            { "name": "ПСУ", "totalQty": 7579, "inPlanQty": 1871 },
+            { "name": "Опор", "totalQty": 44928, "inPlanQty": 44928 },
+            { "name": "МАД", "totalQty": 82, "inPlanQty": 82 },
+            { "name": "ШАД", "totalQty": 0, "inPlanQty": 0 },
+            { "name": "УБАД", "totalQty": 0, "inPlanQty": 0 }
+        ]
+    },
+    {
+        "id": 10,
+        "region": "Кызылорда",
+        "types": [
+            { "name": "РШ", "totalQty": 96, "inPlanQty": 95 },
+            { "name": "ОРШ", "totalQty": 17, "inPlanQty": 17 },
+            { "name": "РК", "totalQty": 1351, "inPlanQty": 33 },
+            { "name": "ОРК", "totalQty": 1513, "inPlanQty": 1481 },
+            { "name": "КЯ", "totalQty": 2657, "inPlanQty": 1667 },
+            { "name": "ПСУ", "totalQty": 1898, "inPlanQty": 824 },
+            { "name": "Опор", "totalQty": 36842, "inPlanQty": 36841 },
+            { "name": "МАД", "totalQty": 9, "inPlanQty": 8 },
+            { "name": "ШАД", "totalQty": 9, "inPlanQty": 7 },
+            { "name": "УБАД", "totalQty": 9, "inPlanQty": 7 }
+        ]
+    },
+    {
+        "id": 11,
+        "region": "Западный Казахстан",
+        "types": [
+            { "name": "РШ", "totalQty": 335, "inPlanQty": 99 },
+            { "name": "ОРШ", "totalQty": 55, "inPlanQty": 16 },
+            { "name": "РК", "totalQty": 9503, "inPlanQty": 1259 },
+            { "name": "ОРК", "totalQty": 10567, "inPlanQty": 2166 },
+            { "name": "КЯ", "totalQty": 6659, "inPlanQty": 1194 },
+            { "name": "ПСУ", "totalQty": 9625, "inPlanQty": 1639 },
+            { "name": "Опор", "totalQty": 36361, "inPlanQty": 28905 },
+            { "name": "МАД", "totalQty": 5, "inPlanQty": 3 },
+            { "name": "ШАД", "totalQty": 9, "inPlanQty": 9 },
+            { "name": "УБАД", "totalQty": 53, "inPlanQty": 17 }
+        ]
+    },
+    {
+        "id": 12,
+        "region": "Астана",
+        "types": [
+            { "name": "РШ", "totalQty": 171, "inPlanQty": 112 },
+            { "name": "ОРШ", "totalQty": 230, "inPlanQty": 224 },
+            { "name": "РК", "totalQty": 8024, "inPlanQty": 0 },
+            { "name": "ОРК", "totalQty": 8975, "inPlanQty": 928 },
+            { "name": "КЯ", "totalQty": 814, "inPlanQty": 24 },
+            { "name": "ПСУ", "totalQty": 3327, "inPlanQty": 165 },
+            { "name": "Опор", "totalQty": 7064, "inPlanQty": 64 },
+            { "name": "МАД", "totalQty": 228, "inPlanQty": 72 },
+            { "name": "ШАД", "totalQty": 0, "inPlanQty": 0 },
+            { "name": "УБАД", "totalQty": 0, "inPlanQty": 0 }
+        ]
+    },
+    {
+        "id": 13,
+        "region": "Акмола",
+        "types": [
+            { "name": "РШ", "totalQty": 576, "inPlanQty": 172 },
+            { "name": "ОРШ", "totalQty": 58, "inPlanQty": 20 },
+            { "name": "РК", "totalQty": 13565, "inPlanQty": 1002 },
+            { "name": "ОРК", "totalQty": 7257, "inPlanQty": 2406 },
+            { "name": "КЯ", "totalQty": 11662, "inPlanQty": 2415 },
+            { "name": "ПСУ", "totalQty": 8561, "inPlanQty": 354 },
+            { "name": "Опор", "totalQty": 60619, "inPlanQty": 55653 },
+            { "name": "МАД", "totalQty": 78, "inPlanQty": 28 },
+            { "name": "ШАД", "totalQty": 5, "inPlanQty": 3 },
+            { "name": "УБАД", "totalQty": 10, "inPlanQty": 5 }
+        ]
+    },
+    {
+        "id": 14,
+        "region": "Восточный Казахстан",
+        "types": [
+            { "name": "РШ", "totalQty": 1119, "inPlanQty": 362 },
+            { "name": "ОРШ", "totalQty": 14, "inPlanQty": 14 },
+            { "name": "РК", "totalQty": 29099, "inPlanQty": 2115 },
+            { "name": "ОРК", "totalQty": 13141, "inPlanQty": 3436 },
+            { "name": "КЯ", "totalQty": 12525, "inPlanQty": 4041 },
+            { "name": "ПСУ", "totalQty": 17391, "inPlanQty": 2317 },
+            { "name": "Опор", "totalQty": 70380, "inPlanQty": 53986 },
+            { "name": "МАД", "totalQty": 23, "inPlanQty": 16 },
+            { "name": "ШАД", "totalQty": 22, "inPlanQty": 14 },
+            { "name": "УБАД", "totalQty": 22, "inPlanQty": 14 }
+        ]
+    },
+    {
+        "id": 15,
+        "region": "Жетісу",
+        "types": [
+            { "name": "РШ", "totalQty": 676, "inPlanQty": 151 },
+            { "name": "ОРШ", "totalQty": 127, "inPlanQty": 156 },
+            { "name": "РК", "totalQty": 11733, "inPlanQty": 715 },
+            { "name": "ОРК", "totalQty": 6727, "inPlanQty": 1871 },
+            { "name": "КЯ", "totalQty": 24744, "inPlanQty": 2829 },
+            { "name": "ПСУ", "totalQty": 19487, "inPlanQty": 1544 },
+            { "name": "Опор", "totalQty": 113949, "inPlanQty": 54053 },
+            { "name": "МАД", "totalQty": 176, "inPlanQty": 79 },
+            { "name": "ШАД", "totalQty": 6, "inPlanQty": 1 },
+            { "name": "УБАД", "totalQty": 2, "inPlanQty": 0 }
+        ]
+    },
+    {
+        "id": 16,
+        "region": "Павлодар",
+        "types": [
+            { "name": "РШ", "totalQty": 449, "inPlanQty": 60 },
+            { "name": "ОРШ", "totalQty": 60, "inPlanQty": 19 },
+            { "name": "РК", "totalQty": 22101, "inPlanQty": 741 },
+            { "name": "ОРК", "totalQty": 11692, "inPlanQty": 3760 },
+            { "name": "КЯ", "totalQty": 6838, "inPlanQty": 916 },
+            { "name": "ПСУ", "totalQty": 19636, "inPlanQty": 1894 },
+            { "name": "Опор", "totalQty": 26517, "inPlanQty": 26517 },
+            { "name": "МАД", "totalQty": 127, "inPlanQty": 16 },
+            { "name": "ШАД", "totalQty": 0, "inPlanQty": 0 },
+            { "name": "УБАД", "totalQty": 0, "inPlanQty": 0 }
+        ]
+    }
+]

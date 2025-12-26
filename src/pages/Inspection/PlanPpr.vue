@@ -16,8 +16,8 @@
                     <th>N</th>
                     <th>Тип обьекта</th>
                     <th>Местонахождение</th>
-                    <th>Отвественный</th>
                     <th>Кол-во обьектов</th>
+                    <th>Кол-во в плане за 2026 г</th>
                     <th>Дата 1 кв</th>
                     <th>Дата 2 кв</th>
                     <th>Дата 3 кв</th>
@@ -44,8 +44,8 @@
                   <td>{{ ppr.id }}</td>
                   <td>{{ ppr.type }}</td>
                   <td>{{ ppr.location }}</td>
-                  <td>{{ ppr.leaderFullName }}</td>
-                  <td>100</td>
+                  <td>{{ getProperObjectQty(ppr.location, ppr.type)[0] }}</td>
+                  <td>{{ getProperObjectQty(ppr.location, ppr.type)[1] }}</td>
                   <td>{{ ppr.q1Date }}</td>
                   <td>{{ ppr.q2Date }}</td>
                   <td>{{ ppr.q3Date }}</td>
@@ -64,13 +64,22 @@
 
             <div class="modal-body grid">
               <div class="field">
-                <label>Тип обьекта </label>
-                <input class="obj-input" v-model="form.type" type="text" width="400px">
+                <label for="locationId">Местонахождение</label>
+                <select id="locationId" class="obj-input" v-model="form.location">
+                  <option disabled value="">Выберите местонахождение</option>
+                  <option v-for="type in objectTypes" :key="type.id" :value="type.region">
+                    {{ type.region }}
+                  </option>
+                </select>
               </div>
-
               <div class="field">
-                <label>Местонахождение </label>
-                <input class="obj-input" v-model="form.location" type="text" width="400px">
+                <label for="typeId">Тип обьекта</label>
+                <select id="typeId" class="obj-input" v-model="form.type">
+                  <option disabled value="">Выберите тип обьекта</option>
+                  <option v-for="type in typesForSelectedRegion" :key="type.name" :value="type.name">
+                    {{ type.name }}
+                  </option>
+                </select>
               </div>
 
               <div class="field">
@@ -91,7 +100,7 @@
                 <label>Дата 4 кв </label>
                 <input class="obj-input" v-model="form.q4Date" type="date" width="400px">
               </div>
-              <div class="field">
+              <!-- <div class="field">
                 <label for="crewId">Бригада исполнителей</label>
                 <select id="crewId" class="obj-input" v-model="form.crewId">
                   <option disabled value="">Выберите бригаду</option>
@@ -99,7 +108,7 @@
                     {{ c.name }} — {{ c.desd }} (бригадир: {{ c.leaderFullName }})
                   </option>
                 </select>
-              </div>
+              </div> -->
             </div>
             <button @click="savePprPlan">Сохранить</button>
           </div>
@@ -109,6 +118,7 @@
 
 <script>
   import axios from 'axios';
+  import objectTypes from '../../objectTypes.json'
 
   const API = import.meta.env.VITE_API_URL;
 
@@ -121,7 +131,7 @@
 export default {
     data() {
       return {
-        crews: [],
+        objectTypes,
         pprs: [],
         isEdit: false,
         selectedPprId: null,
@@ -131,11 +141,10 @@ export default {
         form: {
           type: "",
           location: "",
-          crewId: "",
-          q1Date: "",
-          q2Date: "",
-          q3Date: "",
-          q4Date: ""
+          q1Date: "2026-01-01",
+          q2Date: "2026-04-01",
+          q3Date: "2026-07-01",
+          q4Date: "2026-10-01"
         }
       };
     },
@@ -148,16 +157,42 @@ export default {
   computed: {
     sortedPprs() {
       return [...this.pprs].sort((a, b) => a.id - b.id);
+    },
+
+    typesForSelectedRegion() {
+      const regionObj = this.objectTypes.find(r => r.region === this.form.location);
+      return regionObj?.types ?? [];
     }
   },
 
   methods: {
+     getProperObjectQty(location, typeName) {
+      const regionObj = this.objectTypes.find(r => r.region?.trim() === (location ?? '').trim());
+      if (!regionObj) return [0, 0];
+
+      const typeObj = regionObj.types.find(t => t.name?.trim() === (typeName ?? '').trim());
+      if (!typeObj) return [0, 0];
+
+      return [typeObj.totalQty ?? 0, typeObj.inPlanQty ?? 0];
+    },
+
+    getDefaultForm() {
+      return {
+        type: "",
+        location: "",
+        q1Date: "2026-01-01",
+        q2Date: "2026-04-01",
+        q3Date: "2026-07-01",
+        q4Date: "2026-10-01",
+      };
+    },
+    
     openCreateForm() {
       this.showForm = true;
       this.selectedPprId = null;
       this.isEdit = false;
 
-      this.form = { type:"", location:"", crewId:"", q1Date:"", q2Date:"", q3Date:"", q4Date:"" };
+      this.form = this.getDefaultForm();
     },
 
     openEditForm() {
@@ -170,7 +205,6 @@ export default {
       this.form = {
           type: ppr.type,
           location: ppr.location,
-          crewId: ppr.crewId,
           q1Date: ppr.q1Date,
           q2Date: ppr.q2Date,
           q3Date: ppr.q3Date,
@@ -218,15 +252,14 @@ export default {
     }, 
 
     async savePprPlan() {
-      if (!this.form.type || !this.form.location || !this.form.crewId) {
-        alert("Заполните тип, местонахождение и выберите бригаду");
+      if (!this.form.type || !this.form.location) {
+        alert("Заполните тип или местонахождение");
         return;
       }
 
       const payload = {
         type: this.form.type,
         location: this.form.location,
-        crewId: this.form.crewId,
         q1Date: this.form.q1Date || null,
         q2Date: this.form.q2Date || null,
         q3Date: this.form.q3Date || null,
@@ -245,7 +278,7 @@ export default {
         await this.getPprPlan();
         this.closeForm();
 
-        this.form = { type:"", location:"", crewId:"", q1Date:"", q2Date:"", q3Date:"", q4Date:"" };
+        this.form = this.getDefaultForm();
         this.isEdit = false;
         this.selectedPprId = null;
 
